@@ -5,15 +5,34 @@ from PIL import Image
 import io
 import requests
 import pickle
+import easyocr
 
 
 # Variables
+data_list = []
 save_file_path = "/home/sealu/hackathon/Make-a-lens-for-Amazon/variables/"
 file_path = "/home/sealu/hackathon/student_resource/dataset/train.csv"
+reader = easyocr.Reader(["en"])
 n = 0
+count = 0
 
 
 # Functions
+def extract_text_from_image(image):
+    """
+    Function to extract and clean text from an image URL using EasyOCR.
+    Parameters:
+    image (numpy array): nparray of the image.
+    Returns:
+    str: Extracted text with extra spaces and newlines removed.
+    """
+    try:
+        text = reader.readtext(image, detail=0)
+        return text
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
+
+
 def load_image_from_url(image_url):
     """
     Downloads an image from a URL and converts it into a numpy array.
@@ -36,9 +55,6 @@ def load_image_from_url(image_url):
         print(f"Error loading image: {e}")
         return None
 
-def apply_ocr_to_image(image_matrix):
-    print("Applying OCR to image...")
-    
 
 # Main code
 
@@ -53,12 +69,9 @@ print("Total number of rows: ", df.shape[0])
 
 df = df.iloc[n:]
 
-data_list = []
-
-count = 0
 # Iterate through the rows and create dictionaries
 for index, row in df.iterrows():
-    if count == 200:
+    if count == 600:
         break
     image_matrix = load_image_from_url(row["image_link"])
 
@@ -70,7 +83,7 @@ for index, row in df.iterrows():
             "group_id": row["group_id"],
             "entity_name": row["entity_name"],
             "entity_value": row["entity_value"],
-            "image_data": apply_ocr_to_image(image_matrix),
+            "image_data": extract_text_from_image(image_matrix),
         }
         print("Data dictionary created for index: ", index)
         # Append the dictionary to the list
@@ -80,12 +93,3 @@ for index, row in df.iterrows():
             pickle.dump(data_list, file)
         print("Data dictionary saved for index: ", index)
         count += 1
-
-"""
-# Check if all the files have been saved
-with open(save_file_path + "data_list.pkl", 'rb') as file:
-    data_list_revived = pickle.load(file)
-
-print("Data list loaded successfully...")
-print("Total number of rows: ", len(data_list_revived))
-"""

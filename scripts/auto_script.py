@@ -13,6 +13,5 @@ while N < 263859:
     # print(code)
     exec(code)
     prevN = N
-    N += 199
+    N += 599
     print(f"\nDone from [{prevN}-{N}]")
-    
