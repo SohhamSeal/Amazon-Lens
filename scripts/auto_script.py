@@ -2,7 +2,7 @@
 import pandas as pd
 
 # Variables
-N = 0
+N = 1198
 prevN = 0
 
 with open("/home/sealu/hackathon/Make-a-lens-for-Amazon/scripts/data_loading.py") as f:
@@ -13,5 +13,5 @@ while N < 263859:
     # print(code)
     exec(code)
     prevN = N
-    N += 599
+    N += 249
     print(f"\nDone from [{prevN}-{N}]")

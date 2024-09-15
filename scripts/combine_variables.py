@@ -20,9 +20,11 @@ for files in sorted_files:
         df_files.append(pickle.load(file))
     print("Done for ", files)
 
-df_combined = pd.concat(df_files, axis=0, ignore_index=True)
+print(df_files[0])
+# df_combined = pd.concat(df_files, axis=0, ignore_index=True)
 
-print(len(df_combined))
+
+# print(len(df_combined))
 
 
 # with open(save_file_path + "df_combined.pkl", "wb") as file:

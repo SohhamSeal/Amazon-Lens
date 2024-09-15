@@ -67,30 +67,27 @@ print("Total number of rows: ", df.shape[0])
 # # Pickling the dataframe
 # with open(save_file_path + "dataframe.pkl", "wb") as file:
 #     pickle.dump(df, file)
+print(df.head())
 
-df = df.iloc[n:]
+# df = df.iloc[n:]
 
 # Iterate through the rows and create dictionaries
 for index, row in df.iterrows():
-    if count == 250:
-        break
+    print("Index:", index)
     image_matrix = load_image_from_url(row["image_link"])
 
     # Skipping non-accessible images
     if image_matrix is not None:
-        # Create the dictionary
-        data_dict = {
-            "temp_id": index,
-            "group_id": row["group_id"],
-            "entity_name": row["entity_name"],
-            "entity_value": row["entity_value"],
-            "image_data": extract_text_from_image(image_matrix),
-        }
-        print("Data dictionary created for index: ", index)
-        # Append the dictionary to the list
-        data_list.append(data_dict)
-        print("Appended data")
-        with open(save_file_path + "data_list" + str(n) + ".pkl", "wb") as file:
-            pickle.dump(data_list, file)
-        print("Data dictionary saved for index: ", index)
-        count += 1
+        df.loc[index,'image_link'] = extract_text_from_image(image_matrix) 
+        print("Data extracted from image index: ", index)
+        with open(save_file_path + "df" + str(n) + ".pkl", "wb") as file:
+            pickle.dump(df, file)
+        print("Dataframe saved for index: ", index)
+        # count += 1
+    
+
+print(df.head())
+
+# # Pickling the dataframe
+# with open(save_file_path + "dataframe.pkl", "wb") as file:
+#     pickle.dump(df, file)
