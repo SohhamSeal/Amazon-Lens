@@ -2,10 +2,13 @@
 import pandas as pd
 
 # Variables
-N = 1198
+N = 0
 prevN = 0
 
-with open("/home/sealu/hackathon/Make-a-lens-for-Amazon/scripts/data_loading.py") as f:
+# with open("/home/sealu/hackathon/Make-a-lens-for-Amazon/scripts/data_loading.py") as f:
+#     code = f.read()
+
+with open("/home/sealu/hackathon/Make-a-lens-for-Amazon/scripts/data_creation.py") as f:
     code = f.read()
 
 while N < 263859:
@@ -13,5 +16,5 @@ while N < 263859:
     # print(code)
     exec(code)
     prevN = N
-    N += 249
+    N += 100
     print(f"\nDone from [{prevN}-{N}]")

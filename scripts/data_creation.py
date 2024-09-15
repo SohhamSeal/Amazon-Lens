@@ -9,9 +9,8 @@ import easyocr
 
 
 # Variables
-data_list = []
 save_file_path = "/home/sealu/hackathon/Make-a-lens-for-Amazon/variables/"
-file_path = "/home/sealu/hackathon/student_resource/dataset/train.csv"
+file_path = "/home/sealu/hackathon/Make-a-lens-for-Amazon/variables/train.csv"
 reader = easyocr.Reader(["en"])
 n = 0
 count = 0
@@ -64,30 +63,35 @@ df = pd.read_csv(file_path)
 print("Dataframe loaded successfully...")
 print("Total number of rows: ", df.shape[0])
 
-# # Pickling the dataframe
-# with open(save_file_path + "dataframe.pkl", "wb") as file:
-#     pickle.dump(df, file)
+# Pickling the dataframe
+if n == 0:
+    with open(save_file_path + "dataframe.pkl", "wb") as file:
+        pickle.dump(df, file)
+print(len(df))
 print(df.head())
 
 # df = df.iloc[n:]
 
 # Iterate through the rows and create dictionaries
-for index, row in df.iterrows():
+for index, row in df.iloc[n:].iterrows():
+    if count == 200:
+        break
+    # print(index)
     print("Index:", index)
     image_matrix = load_image_from_url(row["image_link"])
 
     # Skipping non-accessible images
     if image_matrix is not None:
         df.loc[index,'image_link'] = extract_text_from_image(image_matrix) 
+        # print("check:",df.iloc[n:index+1])
         print("Data extracted from image index: ", index)
-        with open(save_file_path + "df" + str(n) + ".pkl", "wb") as file:
-            pickle.dump(df, file)
-        print("Dataframe saved for index: ", index)
-        # count += 1
+    else:
+        print("Skipping image index: ", index)
+    count += 1
+
+# with open(save_file_path + "testdf" + str(n) + ".pkl", "wb") as file:
+#     pickle.dump(df.iloc[n:index], file)
     
+df.to_csv(file_path, index=False)
 
-print(df.head())
-
-# # Pickling the dataframe
-# with open(save_file_path + "dataframe.pkl", "wb") as file:
-#     pickle.dump(df, file)
+print(df.iloc[:index].head())

@@ -21,13 +21,13 @@ for files in sorted_files:
     print("Done for ", files)
 
 print(df_files[0])
-# df_combined = pd.concat(df_files, axis=0, ignore_index=True)
+df_combined = pd.concat(df_files, axis=0, ignore_index=True)
 
 
-# print(len(df_combined))
+print(len(df_combined))
 
 
-# with open(save_file_path + "df_combined.pkl", "wb") as file:
-#     pickle.dump(df_combined, file)
+with open(save_file_path + "df_combined.pkl", "wb") as file:
+    pickle.dump(df_combined, file)
 
-# df_combined
+df_combined
