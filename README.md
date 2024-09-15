@@ -1,5 +1,5 @@
-# Make-a-lens-for-Amazon
-This repository contains code and data for the [Make-a-lens-for-Amazon Hackathon](https://www.hackerearth.com/challenges/hackathon/make-a-lens-for-amazon-2/). The goal of the hackathon is to build a machine learning model that can extract information from product images and return structured data.
+# Amazon Lens
+This repository contains code and data for the [repo](https://www.hackerearth.com/challenges/hackathon/make-a-lens-for-amazon-2/). The goal of the hackathon is to build a machine learning model that can extract information from product images and return structured data.
 
 The dataset contains 2.6 million product images, each with a unique identifier. The images are stored in a publicly accessible bucket. The dataset also contains a CSV file that maps each image identifier to its corresponding product information.
 
